@@ -54,15 +54,15 @@ function App() {
                     <input placeholder={"Wyszukaj emotkę / autora..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
                 </div>
                 <p>Wczytano <b>{emoteList.length}/{emotes.length}</b> emotek <a href={"#"} onClick={()=>{refreshEmotes()}}>Odśwież</a></p>
-                <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} />
+                <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} sq={searchQuery}/>
                 <div id={"emotes"}>
                     {emoteList.map((emote, i)=>{
-                        if (i > maxEmotes) {return null}
+                        if (i > maxEmotes && searchQuery.length == 0) {return null}
                         return (emote.name.toLowerCase().includes(searchQuery.toLowerCase()) || emote.author.toLowerCase().includes(searchQuery.toLowerCase()))
-                            && <Emote name={emote.name} author={emote.author} authorId={emote.authorId} url={emote.url} key={emote.name}/>
+                            && <Emote name={emote.name} author={emote.author} authorId={emote.authorId} url={emote.url} key={emote.url}/>
                     })}
                 </div>
-                <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} />
+                <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} sq={searchQuery}/>
                 <button onClick={showMore}>Wczytaj więcej emotek</button>
                 <br />
                 <button onClick={showAll} className={"secondary"}>Wczytaj wszystkie emotki</button>
@@ -76,9 +76,11 @@ function App() {
     )
 }
 
-const DisplayingCount = ({maxEmotes,emotes}:{maxEmotes:number, emotes:number})=>{
+const DisplayingCount = ({maxEmotes,emotes,sq}:{maxEmotes:number, emotes:number, sq:string})=>{
     return (
-        <p>Wyświetlanie <b>{maxEmotes > emotes ? emotes : maxEmotes}</b> emotek</p>
+        <>
+            {sq.length > 0 ? <p>Wyszukiwanie...</p> : <p>Wyświetlanie <b>{maxEmotes > emotes ? emotes : maxEmotes}</b> emotek</p>}
+        </>
     )
 }
 
