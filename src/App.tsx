@@ -8,10 +8,10 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
 function App() {
     const [searchQuery, setSearchQuery] = useState('')
     const [emoteList, setEmoteList] = useState([{
-        name:'aha',
+        name:'Loading',
         author:'Wczytywanie...',
         authorId:'',
-        url:'https://7tv.app/emotes/6287c2ca6d9cd2d1f31b5e7d'
+        url:'https://7tv.app/emotes/60b9293255c320f0e805d6b9'
     }])
 
     function idFromUrl(url:string) {
@@ -31,7 +31,7 @@ function App() {
                     finalEmoteList.push({name:json.name,author:json.owner.username,authorId:json.owner.id,url: emote})
                 }
             ).catch((err)=>{console.error(err)})
-            setTimeout(()=>{setEmoteList(finalEmoteList)}, 500)
+            setTimeout(()=>{setEmoteList(finalEmoteList)}, 1000)
         })
     }
 
@@ -56,6 +56,7 @@ function App() {
                     <FontAwesomeIcon icon={faGithub} onClick={()=>{window.open('https://github.com/mxgic1337/dawid-jasper-emotes')}}/>
                 </footer>
             </main>
+            <button className={"upButton"} onClick={()=>{window.scrollTo(0, 0);}}>⏫</button>
         </>
     )
 }
