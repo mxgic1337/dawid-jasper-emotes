@@ -19,6 +19,10 @@ function App() {
     }
 
     useEffect(()=>{
+        refreshEmotes()
+    }, [])
+
+    function refreshEmotes() {
         const finalEmoteList:{name:string, author:string, authorId:string, url:string}[] = []
         emotes.map((emote)=>{
             fetch('https://7tv.io/v3/emotes/' + idFromUrl(emote)).then(
@@ -27,9 +31,9 @@ function App() {
                     finalEmoteList.push({name:json.name,author:json.owner.username,authorId:json.owner.id,url: emote})
                 }
             ).catch((err)=>{console.error(err)})
+            setTimeout(()=>{setEmoteList(finalEmoteList)}, 500)
         })
-        setTimeout(()=>{setEmoteList(finalEmoteList)}, 500)
-    }, [])
+    }
 
     return (
         <>
@@ -39,17 +43,17 @@ function App() {
                     <p>Czegoś tu brakuje? Wykonaj <b>Pull request</b> na <a href={"https://github.com/mxgic1337/dawid-jasper-emotes/"}>GitHub</a>.</p>
                 </header>
                 <div id={"search"}>
-                    <input placeholder={"Wyszukaj emotki..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
+                    <input placeholder={"Wyszukaj emotkę / autora..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
                 </div>
-                <p>Znaleziono {emoteList.length} emotek</p>
+                <p>Wczytano {emoteList.length}/{emotes.length} emotek <a href={"#"} onClick={()=>{refreshEmotes()}}>Odśwież</a></p>
                 <div id={"emotes"}>
                     {emoteList.map((emote)=>{
-                        return emote.name.toLowerCase().includes(searchQuery.toLowerCase()) && <Emote name={emote.name} author={emote.author} authorId={emote.authorId} url={emote.url} key={emote.name}/>
+                        return (emote.name.toLowerCase().includes(searchQuery.toLowerCase()) || emote.author.toLowerCase().includes(searchQuery.toLowerCase()))
+                            && <Emote name={emote.name} author={emote.author} authorId={emote.authorId} url={emote.url} key={emote.name}/>
                     })}
                 </div>
                 <footer>
                     <FontAwesomeIcon icon={faGithub} onClick={()=>{window.open('https://github.com/mxgic1337/dawid-jasper-emotes')}}/>
-                    <p><a href={"https//mxgic1337.xyz/"}>mxgic1337.xyz</a></p>
                 </footer>
             </main>
         </>
