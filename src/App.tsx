@@ -47,7 +47,8 @@ function App() {
         <>
             <main>
                 <header>
-                    <h1>Baza emotek z Jasperem</h1>
+                    <h1>Zbiór emotek z Jasperem</h1>
+                    <p>Jest to projekt stworzony po to, by ułatwić szukanie emotek z Dawidem Jasperem.</p>
                     <p>Czegoś tu brakuje? Wykonaj <b>Pull request</b> na <a href={"https://github.com/mxgic1337/dawid-jasper-emotes/"}>GitHub</a>.</p>
                 </header>
                 <div id={"search"}>
