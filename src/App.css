@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    color: white;
+    background: #111;
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+}
+
+.emote {
+    width: 250px;
+    display: inline-block;
+    background: #0005;
+    padding: 15px 25px;
+    text-align: center;
+    transition: .25s;
+    cursor: pointer;
+    margin: 15px;
+    border-radius: 10px;
+}
+.emote:hover {
+    scale: 1.1;
+    rotate: 1deg;
+}
+.emote .name {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.emote img {
+    height: 100px;
+}
+
+main {
+    position: absolute;
+    width: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    text-align: center;
+}
+
+header {
+    margin: 35px;
+}
+
+a {
+    color: #00ff6f;
+    text-decoration: none;
+}
+
+#search {
+    margin: 15px;
+}
+
+input {
+    padding: 7px 25px;
+    background: #0005;
+    color: white;
+    font-size: 1.15rem;
+    width: 35%;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 15px;
+    outline: none;
+    border: 2px solid #0000;
+    transition: .2s;
+}
+
+input:focus {
+    border: 2px solid #00ff6f;
+}
+
+footer {padding: 50px}
+
+footer svg {
+    font-size: 5rem;
+    opacity: .1;
+    transition: .2s;
+    cursor: pointer;
+}
+footer svg:hover {
+    opacity: 1;
+}
