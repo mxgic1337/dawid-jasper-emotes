@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 
 function App() {
+    const [maxEmotes, setMaxEmotes] = useState(40)
     const [searchQuery, setSearchQuery] = useState('')
     const [emoteList, setEmoteList] = useState([{
         name:'Loading',
@@ -35,6 +36,13 @@ function App() {
         })
     }
 
+    function showMore() {
+        if (maxEmotes<emoteList.length) {setMaxEmotes(maxEmotes + 40);}
+    }
+    function showAll() {
+        setMaxEmotes(emoteList.length)
+    }
+
     return (
         <>
             <main>
@@ -45,19 +53,32 @@ function App() {
                 <div id={"search"}>
                     <input placeholder={"Wyszukaj emotkę / autora..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
                 </div>
-                <p>Wczytano {emoteList.length}/{emotes.length} emotek <a href={"#"} onClick={()=>{refreshEmotes()}}>Odśwież</a></p>
+                <p>Wczytano <b>{emoteList.length}/{emotes.length}</b> emotek <a href={"#"} onClick={()=>{refreshEmotes()}}>Odśwież</a></p>
+                <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} />
                 <div id={"emotes"}>
-                    {emoteList.map((emote)=>{
+                    {emoteList.map((emote, i)=>{
+                        if (i > maxEmotes) {return null}
                         return (emote.name.toLowerCase().includes(searchQuery.toLowerCase()) || emote.author.toLowerCase().includes(searchQuery.toLowerCase()))
                             && <Emote name={emote.name} author={emote.author} authorId={emote.authorId} url={emote.url} key={emote.name}/>
                     })}
                 </div>
+                <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} />
+                <button onClick={showMore}>Wczytaj więcej emotek</button>
+                <br />
+                <button onClick={showAll} className={"secondary"}>Wczytaj wszystkie emotki</button>
                 <footer>
                     <FontAwesomeIcon icon={faGithub} onClick={()=>{window.open('https://github.com/mxgic1337/dawid-jasper-emotes')}}/>
+                    <p style={{color: 'rgba(255,255,255,.1)'}}>mxgic1337_</p>
                 </footer>
             </main>
             <button className={"upButton"} onClick={()=>{window.scrollTo(0, 0);}}>⏫</button>
         </>
+    )
+}
+
+const DisplayingCount = ({maxEmotes,emotes}:{maxEmotes:number, emotes:number})=>{
+    return (
+        <p>Wyświetlanie <b>{maxEmotes > emotes ? emotes : maxEmotes}</b> emotek</p>
     )
 }
 
