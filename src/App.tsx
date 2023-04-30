@@ -1,12 +1,35 @@
 import './App.css'
 import Emote from "./Emote.tsx";
 import emotes from './emotes.json'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 
 function App() {
     const [searchQuery, setSearchQuery] = useState('')
+    const [emoteList, setEmoteList] = useState([{
+        name:'aha',
+        author:'Wczytywanie...',
+        authorId:'',
+        url:'https://7tv.app/emotes/6287c2ca6d9cd2d1f31b5e7d'
+    }])
+
+    function idFromUrl(url:string) {
+        return url.split('/')[4]
+    }
+
+    useEffect(()=>{
+        const finalEmoteList:{name:string, author:string, authorId:string, url:string}[] = []
+        emotes.map((emote)=>{
+            fetch('https://7tv.io/v3/emotes/' + idFromUrl(emote)).then(
+                async (response)=>{
+                    const json = await response.json();
+                    finalEmoteList.push({name:json.name,author:json.owner.username,authorId:json.owner.id,url: emote})
+                }
+            ).catch((err)=>{console.error(err)})
+        })
+        setTimeout(()=>{setEmoteList(finalEmoteList)}, 500)
+    }, [])
 
     return (
         <>
@@ -18,13 +41,15 @@ function App() {
                 <div id={"search"}>
                     <input placeholder={"Wyszukaj emotki..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
                 </div>
+                <p>Znaleziono {emoteList.length} emotek</p>
                 <div id={"emotes"}>
-                    {emotes.map((emote)=>{
-                        return emote.name.toLowerCase().includes(searchQuery.toLowerCase()) && <Emote name={emote.name} url={emote.url} key={emote.name}/>
+                    {emoteList.map((emote)=>{
+                        return emote.name.toLowerCase().includes(searchQuery.toLowerCase()) && <Emote name={emote.name} author={emote.author} authorId={emote.authorId} url={emote.url} key={emote.name}/>
                     })}
                 </div>
                 <footer>
                     <FontAwesomeIcon icon={faGithub} onClick={()=>{window.open('https://github.com/mxgic1337/dawid-jasper-emotes')}}/>
+                    <p><a href={"https//mxgic1337.xyz/"}>mxgic1337.xyz</a></p>
                 </footer>
             </main>
         </>

@@ -14,7 +14,7 @@ body {
     width: 250px;
     display: inline-block;
     background: #0005;
-    padding: 15px 25px;
+    padding: 20px 25px;
     text-align: center;
     transition: .25s;
     cursor: pointer;
@@ -31,6 +31,7 @@ body {
 }
 
 .emote img {
+    margin-bottom: 10px;
     height: 100px;
 }
 
@@ -80,6 +81,16 @@ footer svg {
     opacity: .1;
     transition: .2s;
     cursor: pointer;
+    margin-bottom: 10px;
+}
+footer a {
+    color: white;
+    opacity: .1;
+    transition: .2s;
+}
+footer a:hover {
+    color: white;
+    opacity: 1;
 }
 footer svg:hover {
     opacity: 1;
