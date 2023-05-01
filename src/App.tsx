@@ -15,6 +15,12 @@ function App() {
         url:'https://7tv.app/emotes/60b9293255c320f0e805d6b9'
     }])
 
+    const loadMore = <>
+        <button onClick={showMore}>Wczytaj więcej emotek</button>
+        <br />
+        <button onClick={showAll} className={"secondary"}>Wczytaj wszystkie emotki</button>
+    </>
+
     function idFromUrl(url:string) {
         return url.split('/')[4]
     }
@@ -64,9 +70,7 @@ function App() {
                     })}
                 </div>
                 <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} sq={searchQuery}/>
-                <button onClick={showMore}>Wczytaj więcej emotek</button>
-                <br />
-                <button onClick={showAll} className={"secondary"}>Wczytaj wszystkie emotki</button>
+                {emoteList.length>maxEmotes && searchQuery.length == 0 ? loadMore : <button className={'secondary'}>To już wszystko <img alt={"aha"} src={"https://cdn.7tv.app/emote/6287c2ca6d9cd2d1f31b5e7d/1x.webp"} className={"btnemote"}/></button>}
                 <footer>
                     <FontAwesomeIcon icon={faGithub} onClick={()=>{window.open('https://github.com/mxgic1337/dawid-jasper-emotes')}}/>
                     <p style={{color: 'rgba(255,255,255,.1)'}}>mxgic1337_</p>
