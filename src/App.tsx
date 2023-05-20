@@ -51,15 +51,15 @@ function App() {
 
     return (
         <>
+            <div id={"search"}>
+                <input placeholder={"Wyszukaj emotkę / autora..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
+            </div>
             <main>
                 <header>
                     <h1>Zbiór emotek z Jasperem</h1>
                     <p>Jest to projekt stworzony po to, by ułatwić szukanie emotek z Dawidem Jasperem.</p>
                     <p>Czegoś tu brakuje? Wykonaj <b>Pull request</b> na <a href={"https://github.com/mxgic1337/dawid-jasper-emotes/"}>GitHub</a>.</p>
                 </header>
-                <div id={"search"}>
-                    <input placeholder={"Wyszukaj emotkę / autora..."} onChange={(e)=>{setSearchQuery(e.target.value)}}/>
-                </div>
                 <p>Wczytano <b>{emoteList.length}/{emotes.length}</b> emotek <a href={"#"} onClick={()=>{refreshEmotes()}}>Odśwież</a></p>
                 <DisplayingCount maxEmotes={maxEmotes} emotes={emoteList.length} sq={searchQuery}/>
                 <div id={"emotes"}>
